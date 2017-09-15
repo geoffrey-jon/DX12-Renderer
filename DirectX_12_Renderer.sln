@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chapter_4_Direct3D_Initialization", "Chapter_4_Direct3D_Initialization\Chapter_4_Direct3D_Initialization.vcxproj", "{C2F87731-E39F-484A-9758-10AE205F7DE1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chapter_6_Box_Demo", "Chapter_6_Box_Demo\Chapter_6_Box_Demo.vcxproj", "{0C24D200-E301-42AE-92A6-282F8FD491AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{C2F87731-E39F-484A-9758-10AE205F7DE1}.Release|x64.Build.0 = Release|x64
 		{C2F87731-E39F-484A-9758-10AE205F7DE1}.Release|x86.ActiveCfg = Release|Win32
 		{C2F87731-E39F-484A-9758-10AE205F7DE1}.Release|x86.Build.0 = Release|Win32
+		{0C24D200-E301-42AE-92A6-282F8FD491AB}.Debug|x64.ActiveCfg = Debug|x64
+		{0C24D200-E301-42AE-92A6-282F8FD491AB}.Debug|x64.Build.0 = Debug|x64
+		{0C24D200-E301-42AE-92A6-282F8FD491AB}.Debug|x86.ActiveCfg = Debug|Win32
+		{0C24D200-E301-42AE-92A6-282F8FD491AB}.Debug|x86.Build.0 = Debug|Win32
+		{0C24D200-E301-42AE-92A6-282F8FD491AB}.Release|x64.ActiveCfg = Release|x64
+		{0C24D200-E301-42AE-92A6-282F8FD491AB}.Release|x64.Build.0 = Release|x64
+		{0C24D200-E301-42AE-92A6-282F8FD491AB}.Release|x86.ActiveCfg = Release|Win32
+		{0C24D200-E301-42AE-92A6-282F8FD491AB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

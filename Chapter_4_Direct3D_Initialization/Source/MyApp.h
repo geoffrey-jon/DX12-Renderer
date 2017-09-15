@@ -7,6 +7,8 @@
 
 #include "D3DApp.h"
 
+#include "DirectXColors.h"
+
 class MyApp : public D3DApp
 {
 public:

@@ -16,6 +16,12 @@
     <Filter Include="Common">
       <UniqueIdentifier>{197e7b7e-0318-4e9d-8717-3cfe271e24a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{5dbcb793-3234-454b-812d-559c42c83488}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Luna">
+      <UniqueIdentifier>{e503ef1c-4790-475c-8cb5-ab0d29b68874}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\D3DApp.h">
@@ -24,14 +30,17 @@
     <ClInclude Include="..\Common\D3DUtil.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\GameTimer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Source\MyApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\DxException.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\MathHelper.h">
+      <Filter>Common\Luna</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\GameTimer.h">
+      <Filter>Common\Luna</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -39,9 +48,6 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\D3DUtil.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\GameTimer.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Source\MainApplication.cpp">
@@ -53,5 +59,19 @@
     <ClCompile Include="..\Common\DxException.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\Common\MathHelper.cpp">
+      <Filter>Common\Luna</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\GameTimer.cpp">
+      <Filter>Common\Luna</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\VertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

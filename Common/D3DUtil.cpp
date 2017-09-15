@@ -1,9 +1,5 @@
-#include "D3DUtil.h"
+/*  ===================================
+	Direct3D 12 Utility Implementations
+	===================================  */
 
-DxException::DxException(HRESULT hr, const LPCTSTR& functionName, const LPCSTR& filename, int lineNumber) :
-	ErrorCode(hr),
-	FunctionName(functionName),
-	Filename(filename),
-	LineNumber(lineNumber)
-{
-}
+// Nothing to see here.

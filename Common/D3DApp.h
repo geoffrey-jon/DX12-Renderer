@@ -11,13 +11,15 @@
 #include <assert.h>
 #include <dxgi1_4.h>
 #include <wrl.h>
-#include <stdio.h>
+#include <wchar.h>
 
 #include "d3d12.h"
 #include "d3dx12.h"
 
-#include "GameTimer.h"
 #include "D3DUtil.h"
+#include "DxException.h"
+
+#include "GameTimer.h"
 
 using Microsoft::WRL::ComPtr;
 
@@ -43,6 +45,8 @@ public:
 
 	void FlushCommandQueue();
 	void CalculateFrameStats();
+
+	inline float AspectRatio() { return (float)mClientWidth / mClientHeight; }
 
 	virtual void Update(const GameTimer& gt) = 0;
 	virtual void Draw(const GameTimer& gt) = 0;

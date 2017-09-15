@@ -1,24 +1,13 @@
+/*  ===============================
+	Direct3D 12 Utility Definitions
+	===============================  */
+
 #ifndef D3DUTIL_H
 #define D3DUTIL_H
 
-#include <winerror.h>
-#include <windows.h>
-
-#include "DirectXColors.h"
-
-class DxException
-{
-public:
-	DxException() = default;
-	DxException(HRESULT hr, const LPCTSTR& functionName, const LPCSTR& filename, int lineNumber);
-
-	LPCTSTR ToString()const;
-
-	HRESULT ErrorCode = S_OK;
-	LPCTSTR FunctionName;
-	LPCSTR Filename;
-	int LineNumber = -1;
-};
+#ifndef cb_sizeof
+#define cb_sizeof(x) ((sizeof(x) + 255) & ~255)
+#endif
 
 #ifndef ThrowIfFailed
 #define ThrowIfFailed(x) \
