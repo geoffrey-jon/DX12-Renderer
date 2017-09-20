@@ -26,6 +26,7 @@
     <ClInclude Include="..\Common\MathHelper.h" />
     <ClInclude Include="Source\FrameResource.h" />
     <ClInclude Include="Source\MyApp.h" />
+    <ClInclude Include="Source\RenderCube.h" />
     <ClInclude Include="Source\RenderObject.h" />
     <ClInclude Include="Source\Vertex.h" />
   </ItemGroup>
@@ -38,6 +39,7 @@
     <ClCompile Include="Source\FrameResource.cpp" />
     <ClCompile Include="Source\MainApplication.cpp" />
     <ClCompile Include="Source\MyApp.cpp" />
+    <ClCompile Include="Source\RenderCube.cpp" />
     <ClCompile Include="Source\RenderObject.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +79,6 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Source\Cube.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A772F4CC-E9C6-41DE-BD8B-1C5EFCDD8B31}</ProjectGuid>

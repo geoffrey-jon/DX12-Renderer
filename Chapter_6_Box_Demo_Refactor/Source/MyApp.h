@@ -11,6 +11,7 @@
 
 #include "MathHelper.h"
 #include "RenderObject.h"
+#include "RenderCube.h"
 #include "Vertex.h"
 #include "FrameResource.h"
 #include "DirectXColors.h"

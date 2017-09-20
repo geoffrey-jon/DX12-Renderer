@@ -22,8 +22,8 @@
     <Filter Include="Common\Luna">
       <UniqueIdentifier>{e503ef1c-4790-475c-8cb5-ab0d29b68874}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Geometry">
-      <UniqueIdentifier>{955f450b-73ac-4f77-8dad-31bb2871ed8c}</UniqueIdentifier>
+    <Filter Include="Render Objects">
+      <UniqueIdentifier>{7facf4b6-66b0-41f7-b4d6-7a3daab3726e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -45,14 +45,17 @@
     <ClInclude Include="..\Common\GameTimer.h">
       <Filter>Common\Luna</Filter>
     </ClInclude>
-    <ClInclude Include="Source\RenderObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\FrameResource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RenderObject.h">
+      <Filter>Render Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RenderCube.h">
+      <Filter>Render Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -77,11 +80,14 @@
     <ClCompile Include="..\Common\GameTimer.cpp">
       <Filter>Common\Luna</Filter>
     </ClCompile>
-    <ClCompile Include="Source\RenderObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\FrameResource.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RenderObject.cpp">
+      <Filter>Render Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RenderCube.cpp">
+      <Filter>Render Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,10 +97,5 @@
     <FxCompile Include="Shaders\PixelShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Source\Cube.txt">
-      <Filter>Resource Files\Geometry</Filter>
-    </Text>
   </ItemGroup>
 </Project>

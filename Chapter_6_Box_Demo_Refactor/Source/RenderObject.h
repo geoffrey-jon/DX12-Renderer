@@ -27,7 +27,7 @@ public:
 
 	void Translate(float x, float y, float z);
 
-private:
+protected:
 	ComPtr<ID3D12Resource> mVertexBuffer;
 	ComPtr<ID3D12Resource> mIndexBuffer;
 

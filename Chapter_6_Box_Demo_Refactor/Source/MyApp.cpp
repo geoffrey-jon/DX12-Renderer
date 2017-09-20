@@ -49,8 +49,8 @@ bool MyApp::Init()
 	ThrowIfFailed(mCommandList->Reset(mGlobalCommandAllocator.Get(), nullptr));
 
 	// Create Render Objects
-	mRenderObjects[0] = new RenderObject(mDevice, mCommandList);
-	mRenderObjects[1] = new RenderObject(mDevice, mCommandList);
+	mRenderObjects[0] = new RenderCube(mDevice, mCommandList);
+	mRenderObjects[1] = new RenderCube(mDevice, mCommandList);
 
 	mRenderObjects[0]->Translate(2, 2, 2);
 
