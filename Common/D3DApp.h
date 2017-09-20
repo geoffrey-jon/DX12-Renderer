@@ -76,7 +76,7 @@ protected:
 	ComPtr<ID3D12Fence> mFence;
 
 	ComPtr<ID3D12CommandQueue> mCommandQueue;
-	ComPtr<ID3D12CommandAllocator> mCommandAllocator;
+	ComPtr<ID3D12CommandAllocator> mGlobalCommandAllocator;
 	ComPtr<ID3D12GraphicsCommandList> mCommandList;
 
 	ComPtr<ID3D12DescriptorHeap> mRTVHeap;

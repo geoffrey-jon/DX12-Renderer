@@ -37,7 +37,7 @@ bool MyApp::Init()
 	if (D3DApp::Init() == false) { return false; }
 
 	// Reset the command list to prep for initialization commands.
-	ThrowIfFailed(mCommandList->Reset(mCommandAllocator.Get(), nullptr));
+	ThrowIfFailed(mCommandList->Reset(mGlobalCommandAllocator.Get(), nullptr));
 
 	// Initialize Static Geometry
 	Vertex vertices[8] =
@@ -263,8 +263,8 @@ void MyApp::Update(const GameTimer& gt)
 
 void MyApp::Draw(const GameTimer& gt) 
 {
-	ThrowIfFailed(mCommandAllocator->Reset());
-	ThrowIfFailed(mCommandList->Reset(mCommandAllocator.Get(), mPSO.Get()));
+	ThrowIfFailed(mGlobalCommandAllocator->Reset());
+	ThrowIfFailed(mCommandList->Reset(mGlobalCommandAllocator.Get(), mPSO.Get()));
 
 	mCommandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),	D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
 
