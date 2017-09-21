@@ -9,7 +9,8 @@ struct Vertex
 	DirectX::XMFLOAT3 Pos;
 	DirectX::XMFLOAT4 Color;
 
-	static D3D12_INPUT_ELEMENT_DESC Layout[2];
+	static const UINT NumElements = 2;
+	static D3D12_INPUT_ELEMENT_DESC Layout[NumElements];
 };
 
 #endif // MYAPP_VERTEX_H

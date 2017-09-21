@@ -28,6 +28,10 @@ public:
 	void Update(const GameTimer& gt) override;
 	void Draw(const GameTimer& gt) override;
 
+	void InitializeOpaquePass();
+	void UpdateOpaquePass();
+	void CompileRootSignature(D3D12_ROOT_PARAMETER* params, UINT numParams, ComPtr<ID3D12RootSignature>& rootSig);
+
 private:
 	static const UINT NumFrames = 3;
 	static const UINT NumRenderObjects = 2;

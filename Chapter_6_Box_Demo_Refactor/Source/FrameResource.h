@@ -11,11 +11,6 @@
 
 using Microsoft::WRL::ComPtr;
 
-struct ObjectConstants
-{
-	DirectX::XMFLOAT4X4 WorldViewProj;
-};
-
 struct FrameResource
 {
 	FrameResource(ComPtr<ID3D12Device>& device, UINT numRenderObjects);
