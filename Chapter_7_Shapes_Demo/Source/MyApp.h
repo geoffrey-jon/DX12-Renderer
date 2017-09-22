@@ -12,9 +12,11 @@
 #include "MathHelper.h"
 #include "RenderObject.h"
 #include "RenderCube.h"
+#include "RenderCylinder.h"
 #include "Vertex.h"
 #include "FrameResource.h"
 #include "DirectXColors.h"
+#include "GFirstPersonCamera.h"
 
 class MyApp : public D3DApp
 {
@@ -49,12 +51,7 @@ private:
 	ComPtr<ID3D12PipelineState> mPSO;
 
 	// Camera Settings
-	DirectX::XMFLOAT4X4 mProj;
-	DirectX::XMFLOAT4X4 mView;
-
-	float mTheta;
-	float mPhi;
-	float mRadius;
+	GFirstPersonCamera* mCamera;
 
 	// Render Objects
 	RenderObject* mRenderObjects[NumRenderObjects];

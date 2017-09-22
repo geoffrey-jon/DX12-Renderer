@@ -7,7 +7,6 @@
 
 #include "D3DCompiler.h"
 #include "DxException.h"
-#include "DirectXMath.h"
 
 #include <wrl.h>
 
@@ -24,11 +23,6 @@ using Microsoft::WRL::ComPtr;
     if(FAILED(hr__)) { throw DxException(hr__, L#x, __FILE__, __LINE__); } \
 }
 #endif
-
-struct ObjectConstants
-{
-	DirectX::XMFLOAT4X4 WorldViewProj;
-};
 
 void CompileShader(LPCWSTR filename, LPCSTR entrypoint, LPCSTR version, ComPtr<ID3DBlob>& code);
 

@@ -15,6 +15,14 @@ RenderObject::RenderObject(ComPtr<ID3D12Device>& device, ComPtr<ID3D12GraphicsCo
 
 RenderObject::~RenderObject()
 {
+	if (vertices != 0)
+	{
+		delete[] vertices;
+	}
+	if (indices != 0)
+	{
+		delete[] indices;
+	}
 }
 
 void RenderObject::Init(ComPtr<ID3D12Device>& device, ComPtr<ID3D12GraphicsCommandList>& cmdList, void* vertices, void* indices)

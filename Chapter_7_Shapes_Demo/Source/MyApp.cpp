@@ -12,12 +12,8 @@ D3D12_INPUT_ELEMENT_DESC Vertex::Layout[Vertex::NumElements] =
 
 MyApp::MyApp(HINSTANCE Instance) : D3DApp(Instance)
 {
-	mView = MathHelper::Identity4x4();
-	mProj = MathHelper::Identity4x4();
-
-	mTheta = 1.5f*DirectX::XM_PI;
-	mPhi = DirectX::XM_PIDIV4;
-	mRadius = 5.0f;
+	mCamera = new GFirstPersonCamera();
+	mCamera->SetPosition(0.0f, 2.0f, -5.0f);
 }
 
 MyApp::~MyApp()
@@ -49,10 +45,9 @@ bool MyApp::Init()
 	ThrowIfFailed(mCommandList->Reset(mGlobalCommandAllocator.Get(), nullptr));
 
 	// Create Render Objects
-	mRenderObjects[0] = new RenderCube(mDevice, mCommandList, NumFrames);
+	mRenderObjects[0] = new RenderCylinder(mDevice, mCommandList, NumFrames);
 	mRenderObjects[1] = new RenderCube(mDevice, mCommandList, NumFrames);
-
-	mRenderObjects[0]->Translate(2, 2, 2);
+	mRenderObjects[1]->Translate(2.0f, 0, 0);
 
 	// Initialize frame resources
 	for (UINT f = 0; f < NumFrames; ++f)
@@ -78,9 +73,7 @@ void MyApp::OnResize()
 {
 	D3DApp::OnResize();
 
-	// The window resized, so update the aspect ratio and recompute the projection matrix.
-	DirectX::XMMATRIX P = DirectX::XMMatrixPerspectiveFovLH(0.25f*MathHelper::Pi, AspectRatio(), 1.0f, 1000.0f);
-	DirectX::XMStoreFloat4x4(&mProj, P);
+	mCamera->SetLens(0.25f*MathHelper::Pi, AspectRatio(), 1.0f, 1000.0f);
 }
 
 void MyApp::Update(const GameTimer& gt) 
@@ -97,17 +90,26 @@ void MyApp::Update(const GameTimer& gt)
 		CloseHandle(eventHandle);
 	}
 
-	// Convert Spherical to Cartesian coordinates.
-	float x = mRadius*sinf(mPhi)*cosf(mTheta);
-	float z = mRadius*sinf(mPhi)*sinf(mTheta);
-	float y = mRadius*cosf(mPhi);
+	// Control the camera.
+	if (GetAsyncKeyState('W') & 0x8000)
+	{
+		mCamera->Walk(10.0f*gt.DeltaTime());
+	}
 
-	// Build the view matrix.
-	DirectX::XMVECTOR pos = DirectX::XMVectorSet(x, y, z, 1.0f);
-	DirectX::XMVECTOR target = DirectX::XMVectorZero();
-	DirectX::XMVECTOR up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-	DirectX::XMMATRIX view = DirectX::XMMatrixLookAtLH(pos, target, up);
-	DirectX::XMStoreFloat4x4(&mView, view);
+	if (GetAsyncKeyState('S') & 0x8000)
+	{
+		mCamera->Walk(-10.0f*gt.DeltaTime());
+	}
+
+	if (GetAsyncKeyState('A') & 0x8000)
+	{
+		mCamera->Strafe(-10.0f*gt.DeltaTime());
+	}
+
+	if (GetAsyncKeyState('D') & 0x8000)
+	{
+		mCamera->Strafe(10.0f*gt.DeltaTime());
+	}
 
 	UpdateOpaquePass();
 }
@@ -131,6 +133,12 @@ void MyApp::Draw(const GameTimer& gt)
 	mCommandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
 
 	mCommandList->SetGraphicsRootSignature(mRootSignature.Get());
+
+	CD3DX12_GPU_DESCRIPTOR_HANDLE frameCBV(mCBVHeap->GetGPUDescriptorHandleForHeapStart());
+	UINT tmp = NumFrames*NumRenderObjects + mCurrentFrame;
+	frameCBV.Offset(tmp, mCbvSrvUavDescriptorSize);
+
+	mCommandList->SetGraphicsRootDescriptorTable(1, frameCBV);
 
 	for (UINT i = 0; i < NumRenderObjects; ++i)
 	{
@@ -163,11 +171,10 @@ void MyApp::InitializeOpaquePass()
 	CompileShader(L"Shaders/VertexShader.hlsl", "VS", "vs_5_0", mVSByteCode);
 	CompileShader(L"Shaders/PixelShader.hlsl", "PS", "ps_5_0", mPSByteCode);
 
-	// Create Descriptor Heap for ObjectConstants Buffers
+	// Create Descriptor Heap for Constants Buffers
 
 	// Need one CBV per object, per frame resource
-	UINT numCBVs = NumRenderObjects * NumFrames;
-	UINT cbSize = cb_sizeof(ObjectConstants);
+	UINT numCBVs = (NumRenderObjects + 1) * NumFrames;
 
 	D3D12_DESCRIPTOR_HEAP_DESC cbHeapDesc;
 	cbHeapDesc.NumDescriptors = numCBVs;
@@ -180,9 +187,11 @@ void MyApp::InitializeOpaquePass()
 	// Create one CBV per Render Object per Frame
 	for (UINT frameIndex = 0; frameIndex < NumFrames; ++frameIndex)
 	{
-		D3D12_GPU_VIRTUAL_ADDRESS cbAddress = mFrameResources[frameIndex]->ConstantBuffer->GetGPUVirtualAddress();
+		D3D12_GPU_VIRTUAL_ADDRESS cbAddress = mFrameResources[frameIndex]->ObjectCB->GetGPUVirtualAddress();
 		for (UINT objIndex = 0; objIndex < NumRenderObjects; ++objIndex)
 		{
+			UINT cbSize = cb_sizeof(ObjectConstants);
+
 			D3D12_CONSTANT_BUFFER_VIEW_DESC cbViewDesc;
 			cbViewDesc.BufferLocation = cbAddress + (objIndex * cbSize); // Object offset into CB
 			cbViewDesc.SizeInBytes = cbSize;
@@ -196,14 +205,33 @@ void MyApp::InitializeOpaquePass()
 		}
 	}
 
+	for (UINT frameIndex = 0; frameIndex < NumFrames; ++frameIndex)
+	{
+		D3D12_GPU_VIRTUAL_ADDRESS cbAddress = mFrameResources[frameIndex]->FrameCB->GetGPUVirtualAddress();
+		UINT cbSize = cb_sizeof(FrameConstants);
+
+		D3D12_CONSTANT_BUFFER_VIEW_DESC cbViewDesc;
+		cbViewDesc.BufferLocation = cbAddress;
+		cbViewDesc.SizeInBytes = cbSize;
+
+		auto handle = CD3DX12_CPU_DESCRIPTOR_HANDLE(mCBVHeap->GetCPUDescriptorHandleForHeapStart());
+		handle.Offset(NumFrames*NumRenderObjects + frameIndex, mCbvSrvUavDescriptorSize);
+
+		mDevice->CreateConstantBufferView(&cbViewDesc, handle);
+	}
+
 	// Initialize Root Signature
-	CD3DX12_ROOT_PARAMETER rootParameters[1];
+	CD3DX12_ROOT_PARAMETER rootParameters[2];
 
-	CD3DX12_DESCRIPTOR_RANGE cbDescTable;
-	cbDescTable.Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 0);
-	rootParameters[0].InitAsDescriptorTable(1, &cbDescTable);
+	CD3DX12_DESCRIPTOR_RANGE objCBDescTable;
+	objCBDescTable.Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 0);
+	rootParameters[0].InitAsDescriptorTable(1, &objCBDescTable);
 
-	CompileRootSignature(rootParameters, 1, mRootSignature);
+	CD3DX12_DESCRIPTOR_RANGE frameCBDescTable;
+	frameCBDescTable.Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 1);
+	rootParameters[1].InitAsDescriptorTable(1, &frameCBDescTable);
+
+	CompileRootSignature(rootParameters, 2, mRootSignature);
 
 	// Initialize PSO
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc;
@@ -213,6 +241,7 @@ void MyApp::InitializeOpaquePass()
 	psoDesc.VS = { mVSByteCode->GetBufferPointer(), mVSByteCode->GetBufferSize() };
 	psoDesc.PS = { mPSByteCode->GetBufferPointer(), mPSByteCode->GetBufferSize() };
 	psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
+	psoDesc.RasterizerState.FillMode = D3D12_FILL_MODE_WIREFRAME;
 	psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
 	psoDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
 	psoDesc.SampleMask = UINT_MAX;
@@ -228,20 +257,23 @@ void MyApp::InitializeOpaquePass()
 
 void MyApp::UpdateOpaquePass()
 {
+	mCamera->UpdateViewMatrix();
+
+	FrameConstants frameConstants;
+	XMStoreFloat4x4(&frameConstants.ViewProj, DirectX::XMMatrixTranspose(mCamera->ViewProj()));
+	memcpy(mFrameResources[mCurrentFrame]->FrameCBData, &frameConstants, sizeof(FrameConstants));
+
 	for (UINT i = 0; i < NumRenderObjects; ++i)
 	{
 		RenderObject* obj = mRenderObjects[i];
 		if (obj->NumDirtyFrames > 0)
 		{
 			DirectX::XMMATRIX world = obj->GetWorldMatrix();
-			DirectX::XMMATRIX view = DirectX::XMLoadFloat4x4(&mView);
-			DirectX::XMMATRIX proj = DirectX::XMLoadFloat4x4(&mProj);
-			DirectX::XMMATRIX worldViewProj = world*view*proj;
 
 			ObjectConstants objConstants;
-			XMStoreFloat4x4(&objConstants.WorldViewProj, DirectX::XMMatrixTranspose(worldViewProj));
+			XMStoreFloat4x4(&objConstants.World, DirectX::XMMatrixTranspose(world));
 
-			BYTE* dest = mFrameResources[mCurrentFrame]->ConstantBufferData;
+			BYTE* dest = mFrameResources[mCurrentFrame]->ObjectCBData;
 			memcpy(&dest[obj->GetCBVHeapIndex()*cb_sizeof(ObjectConstants)], &objConstants, sizeof(ObjectConstants));
 			obj->NumDirtyFrames--;
 		}

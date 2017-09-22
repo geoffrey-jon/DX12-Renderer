@@ -142,7 +142,6 @@ LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 			PostQuitMessage(0);
 		}
-
 		return 0;
 	}
 

@@ -57,6 +57,18 @@
     <ClInclude Include="Source\RenderCube.h">
       <Filter>Render Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Source\RenderCylinder.h">
+      <Filter>Render Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\GeometryGenerator.h">
+      <Filter>Common\Luna</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\GFirstPersonCamera.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ConstantBuffers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\D3DApp.cpp">
@@ -88,6 +100,15 @@
     </ClCompile>
     <ClCompile Include="Source\RenderCube.cpp">
       <Filter>Render Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RenderCylinder.cpp">
+      <Filter>Render Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\GeometryGenerator.cpp">
+      <Filter>Common\Luna</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\GFirstPersonCamera.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,7 @@
 #include "DirectXMath.h"
 #include "d3d12.h"
 #include "d3dx12.h"
+#include "Vertex.h"
 
 using Microsoft::WRL::ComPtr;
 
@@ -44,6 +45,9 @@ protected:
 
 	DirectX::XMMATRIX mWorld;
 	UINT mCBVHeapIndex;
+
+	Vertex* vertices;
+	UINT16* indices;
 
 public:
 	UINT NumDirtyFrames;

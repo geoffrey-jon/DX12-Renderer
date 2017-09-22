@@ -23,10 +23,14 @@
     <ClInclude Include="..\Common\D3DUtil.h" />
     <ClInclude Include="..\Common\DxException.h" />
     <ClInclude Include="..\Common\GameTimer.h" />
+    <ClInclude Include="..\Common\GeometryGenerator.h" />
+    <ClInclude Include="..\Common\GFirstPersonCamera.h" />
     <ClInclude Include="..\Common\MathHelper.h" />
+    <ClInclude Include="Source\ConstantBuffers.h" />
     <ClInclude Include="Source\FrameResource.h" />
     <ClInclude Include="Source\MyApp.h" />
     <ClInclude Include="Source\RenderCube.h" />
+    <ClInclude Include="Source\RenderCylinder.h" />
     <ClInclude Include="Source\RenderObject.h" />
     <ClInclude Include="Source\Vertex.h" />
   </ItemGroup>
@@ -35,11 +39,14 @@
     <ClCompile Include="..\Common\D3DUtil.cpp" />
     <ClCompile Include="..\Common\DxException.cpp" />
     <ClCompile Include="..\Common\GameTimer.cpp" />
+    <ClCompile Include="..\Common\GeometryGenerator.cpp" />
+    <ClCompile Include="..\Common\GFirstPersonCamera.cpp" />
     <ClCompile Include="..\Common\MathHelper.cpp" />
     <ClCompile Include="Source\FrameResource.cpp" />
     <ClCompile Include="Source\MainApplication.cpp" />
     <ClCompile Include="Source\MyApp.cpp" />
     <ClCompile Include="Source\RenderCube.cpp" />
+    <ClCompile Include="Source\RenderCylinder.cpp" />
     <ClCompile Include="Source\RenderObject.cpp" />
   </ItemGroup>
   <ItemGroup>

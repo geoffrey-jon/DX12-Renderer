@@ -10,20 +10,36 @@ FrameResource::FrameResource(ComPtr<ID3D12Device>& device, UINT numRenderObjects
 		&CD3DX12_RESOURCE_DESC::Buffer(cb_sizeof(ObjectConstants) * numRenderObjects),
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(ConstantBuffer.GetAddressOf())
+		IID_PPV_ARGS(ObjectCB.GetAddressOf())
 		));
-	ConstantBuffer->SetName(L"Constant Buffer");
 
-	ThrowIfFailed(ConstantBuffer->Map(0, nullptr, reinterpret_cast<void**>(&ConstantBufferData)));
+	ThrowIfFailed(ObjectCB->Map(0, nullptr, reinterpret_cast<void**>(&ObjectCBData)));
+
+	ThrowIfFailed(device->CreateCommittedResource(
+		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
+		D3D12_HEAP_FLAG_NONE,
+		&CD3DX12_RESOURCE_DESC::Buffer(cb_sizeof(FrameConstants)),
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(FrameCB.GetAddressOf())
+		));
+
+	ThrowIfFailed(FrameCB->Map(0, nullptr, reinterpret_cast<void**>(&FrameCBData)));
 
 	FenceValue = 0;
 }
 
 FrameResource::~FrameResource()
 {
-	if (ConstantBuffer != nullptr)
+	if (ObjectCB != nullptr)
 	{
-		ConstantBuffer->Unmap(0, nullptr);
+		ObjectCB->Unmap(0, nullptr);
 	}
-	ConstantBufferData = nullptr;
+	ObjectCBData = nullptr;
+
+	if (FrameCB != nullptr)
+	{
+		FrameCB->Unmap(0, nullptr);
+	}
+	FrameCBData = nullptr;
 }

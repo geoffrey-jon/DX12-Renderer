@@ -16,14 +16,20 @@ struct VertexOut
 
 cbuffer CBPerObject : register(b0)
 {
-    float4x4 gWorldViewProj;
+    float4x4 gWorld;
+};
+
+cbuffer CBPerFrame : register(b1)
+{
+    float4x4 gViewProj;
 };
 
 VertexOut VS(VertexIn vin)
 {
     VertexOut vout;
-
-    vout.PosH = mul(float4(vin.Pos, 1.0f), gWorldViewProj);
+ 
+    float4 posW = mul(float4(vin.Pos, 1.0f), gWorld);
+    vout.PosH = mul(posW, gViewProj);
     vout.Color = vin.Color;
 
 	return vout;
