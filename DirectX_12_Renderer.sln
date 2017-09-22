@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chapter_6_Box_Demo", "Chapt
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chapter_6_Box_Demo_Refactor", "Chapter_6_Box_Demo_Refactor\Chapter_6_Box_Demo_Refactor.vcxproj", "{A772F4CC-E9C6-41DE-BD8B-1C5EFCDD8B31}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chapter_7_Shapes_Demo", "Chapter_7_Shapes_Demo\Chapter_7_Shapes_Demo.vcxproj", "{FB23A048-7BF7-474D-AF9E-0165C44E6920}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{A772F4CC-E9C6-41DE-BD8B-1C5EFCDD8B31}.Release|x64.Build.0 = Release|x64
 		{A772F4CC-E9C6-41DE-BD8B-1C5EFCDD8B31}.Release|x86.ActiveCfg = Release|Win32
 		{A772F4CC-E9C6-41DE-BD8B-1C5EFCDD8B31}.Release|x86.Build.0 = Release|Win32
+		{FB23A048-7BF7-474D-AF9E-0165C44E6920}.Debug|x64.ActiveCfg = Debug|x64
+		{FB23A048-7BF7-474D-AF9E-0165C44E6920}.Debug|x64.Build.0 = Debug|x64
+		{FB23A048-7BF7-474D-AF9E-0165C44E6920}.Debug|x86.ActiveCfg = Debug|Win32
+		{FB23A048-7BF7-474D-AF9E-0165C44E6920}.Debug|x86.Build.0 = Debug|Win32
+		{FB23A048-7BF7-474D-AF9E-0165C44E6920}.Release|x64.ActiveCfg = Release|x64
+		{FB23A048-7BF7-474D-AF9E-0165C44E6920}.Release|x64.Build.0 = Release|x64
+		{FB23A048-7BF7-474D-AF9E-0165C44E6920}.Release|x86.ActiveCfg = Release|Win32
+		{FB23A048-7BF7-474D-AF9E-0165C44E6920}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
